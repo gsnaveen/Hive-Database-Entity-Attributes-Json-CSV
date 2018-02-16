@@ -1,0 +1,16 @@
+col_name,data_type,comment,database,table_name
+ad_id,string,,myschema,ad_placement_assignments
+placement_id,string,,myschema,ad_placement_assignments
+advertiser_id,string,,myschema,ads
+campaign_id,string,,myschema,ads
+ad_id,string,,myschema,ads
+ad,string,,myschema,ads
+ad_click_url,string,,myschema,ads
+ad_type,string,,myschema,ads
+creative_pixel_size,string,,myschema,ads
+ad_comments,string,,myschema,ads
+floodlight_configuration,string,,myschema,advertisers
+advertiser_id,string,,myschema,advertisers
+advertiser,string,,myschema,advertisers
+advertiser_group_id,string,,myschema,advertisers
+advertiser_group,string,,myschema,advertisers

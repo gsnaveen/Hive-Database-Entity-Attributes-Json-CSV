@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.min.css">
+    <meta charset="utf-8">
+    <style type="text/css" class="init">
+    td.details-control {
+      	background: url('details_open.png') no-repeat center center;
+      	cursor: pointer;
+      }
+      tr.shown td.details-control {
+      	background: url('details_close.png') no-repeat center center;
+      }
+      </style>
+    <title></title>
+  </head>
+  <body>
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Entity</th>
+                <th>Attribute</th>
+                <th>Data Type</th>
+                <th>Database</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Entity</th>
+                <th>Attribute</th>
+                <th>Data Type</th>
+                <th>Database</th>
+            </tr>
+        </tfoot>
+    </table>
+    <script type="text/javascript" class="init">
+                  /* Formatting function for row details - modify as you need */
+              function format ( d ) {
+              // `d` is the original data object for the row
+              return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+              '<tr>'+
+                '<td>Comment:</td>'+
+                '<td>'+d.comment+'</td>'+
+              '</tr>'+
+              '<tr>'+
+                '<td>Extra info:</td>'+
+                '<td>And any further details here (images etc)...</td>'+
+              '</tr>'+
+              '</table>';
+              }
+
+              $(document).ready(function() {
+              var table = $('#example').DataTable( {
+              "ajax": "./HiveSchema.json",
+              "columns": [
+                { "data": "table_name" },
+                { "data": "col_name" },
+                { "data": "data_type" },
+                { "data": "database" }
+              ],
+              "order": [[1, 'asc']]
+              } );
+              // Setup - add a text input to each footer cell
+              $('#example tfoot th').each( function (i) {
+                  var title = $('#example thead th').eq( $(this).index() ).text();
+                  $(this).html( '<input type="text" placeholder="Search '+title+'" data-index="'+i+'" />' );
+              } );
+
+              // Add event listener for opening and closing details
+              $('#example tbody').on('click', 'td.details-control', function () {
+              var tr = $(this).closest('tr');
+              var row = table.row( tr );
+
+              if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+              }
+              else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+              }
+              } );
+              // Filter event handler
+              $( table.table().container() ).on( 'keyup', 'tfoot input', function () {
+                  table
+                      .column( $(this).data('index') )
+                      .search( this.value )
+                      .draw();
+              } );
+              } );
+    </script>
+  </body>
+</html>
