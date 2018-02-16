@@ -13,5 +13,4 @@ hive_sql_db = "SHOW DATABASES like 'mySchema*'"
 hive_sql_tabs_like = " LIKE 'myEntity*'"
 ```
 ###### It produces 2 outputs
-  HiveSchema.json to be used with datatable javascript
-  HiveSchema.csv can be distributed in a email
+  HiveSchema.json used by datatable javascript and HiveSchema.csv which can be distributed in a email.
