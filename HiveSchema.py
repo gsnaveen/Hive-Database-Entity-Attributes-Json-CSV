@@ -1,9 +1,11 @@
 #https://mkleehammer.github.io/pyodbc/
 #https://hortonworks.com/downloads/ download 64bit Hive ODBC driver
 import pyodbc
+# import pyhs2 as hive # for unix
 import pandas as pd
 
 hivecon = pyodbc.connect("DSN=hiveProd2;HOST=ServerName;PORT=20000;UID=userid;PWD=password!",autocommit=True)
+#hivecon = hive.connect(host='ServerName',port=20000,user='userid',password='password!',authMechanism='PLAIN') #for unix
 
 hive_sql_db = "SHOW DATABASES like '*'"
 hive_sql_tabs = "SHOW TABLES IN "
@@ -11,7 +13,6 @@ hive_sql_tabs_like = " LIKE '*'"
 hive_sql_table_describe = "DESCRIBE "
 
 tableDefall = pd.DataFrame()
-TableIndexList = pd.DataFrame()
 
 databasedf = pd.read_sql_query(hive_sql_db, hivecon)
 databaselist = databasedf['database_name']
