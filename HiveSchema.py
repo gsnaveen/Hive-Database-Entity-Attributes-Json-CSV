@@ -17,7 +17,7 @@ tableDefall = pd.DataFrame()
 #Get the database list
 databasedf = pd.read_sql_query(hive_sql_db, hivecon)
 databaselist = databasedf['database_name']
-for db in databaselist: #iterating through the data base list
+for db in databaselist: #iterating through the database list
     try:
         tablelistdf = pd.read_sql_query(hive_sql_tabs + db + hive_sql_tabs_like, hivecon) #Get table list
         tablelistdfSeries = tablelistdf['tab_name']
