@@ -14,11 +14,12 @@ hive_sql_table_describe = "DESCRIBE "
 
 tableDefall = pd.DataFrame()
 
+#Get the database list
 databasedf = pd.read_sql_query(hive_sql_db, hivecon)
 databaselist = databasedf['database_name']
-for db in databaselist:
+for db in databaselist: #iterating through the data base list
     try:
-        tablelistdf = pd.read_sql_query(hive_sql_tabs + db + hive_sql_tabs_like, hivecon)
+        tablelistdf = pd.read_sql_query(hive_sql_tabs + db + hive_sql_tabs_like, hivecon) #Get table list
         tablelistdfSeries = tablelistdf['tab_name']
     except:
         continue
@@ -26,19 +27,19 @@ for db in databaselist:
     for tab in tablelistdfSeries:
         table_name = db + "." + tab
         try:
-            tabledf = pd.read_sql_query(hive_sql_table_describe + table_name, hivecon)
+            tabledf = pd.read_sql_query(hive_sql_table_describe + table_name, hivecon) # Get table definations
         except:
             continue
 
         tabledf['database'] = db
         tabledf['table_name'] = tab
-        tabledf = tabledf[(tabledf.col_name != '') &(tabledf.col_name.str.contains('#')==False ) ].drop_duplicates()
+        tabledf = tabledf[(tabledf.col_name != '') &(tabledf.col_name.str.contains('#')==False ) ].drop_duplicates() #cleansing the table definations
         tableDefall = tableDefall.append(tabledf,ignore_index=True)
 
-tableDefall.to_json("HiveSchema.raw",orient='records')
+tableDefall.to_json("HiveSchema.raw",orient='records') #Saving as a JSON file
 rawJson = open("HiveSchema.raw", 'rU').read()
-rawJson = '{ "data" : '+ rawJson +"}"
+rawJson = '{ "data" : '+ rawJson +"}" #Creating a JSON file format for dataTable grid
 target = open("HiveSchema.json", 'w')
 target.write(rawJson)
 target.close()
-tableDefall.to_csv("HiveSchema.csv",sep=',',header=True, index=False)
+tableDefall.to_csv("HiveSchema.csv",sep=',',header=True, index=False) # Saving table definations to a CSV file.
