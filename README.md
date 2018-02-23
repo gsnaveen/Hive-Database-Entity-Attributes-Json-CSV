@@ -14,3 +14,5 @@ hive_sql_tabs_like = " LIKE 'myEntity*'"
 ```
 ###### It produces 2 outputs
   HiveSchema.json used by datatable javascript and HiveSchema.csv which can be distributed in a email.
+  
+  ![](https://github.com/gsnaveen/Python-Hive-Database-Entity-Attributes-Json-CSV/blob/master/HiveSchemaSearch.png)
