@@ -6,6 +6,9 @@ import pandas as pd
 
 hivecon = pyodbc.connect("DSN=hiveProd2;HOST=ServerName;PORT=20000;UID=userid;PWD=password!",autocommit=True)
 #hivecon = hive.connect(host='ServerName',port=20000,user='userid',password='password!',authMechanism='PLAIN') #for unix
+#hivecon = pyodbc.connect('DRIVER={/opt/cloudera/impalaodbc/lib/universal/libclouderaimpalaodbc.dylib};HOST=server;PORT=20000;UID=userid;PWD=password;AuthMech=3;SSL=1',autocommit=True) #Impala Mac
+
+
 
 hive_sql_db = "SHOW DATABASES like '*'"
 hive_sql_tabs = "SHOW TABLES IN "
